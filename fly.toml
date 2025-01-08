@@ -1,0 +1,15 @@
+app = "discoverkenyaapi"
+primary_region = "jnb"
+
+[env]
+  RAILS_ENV = "production"
+
+[experimental]
+  allowed_public_ports = [80]
+
+[services.http]
+  internal_port = 3000
+  force_https = true
+
+[build]
+  context = "./"
