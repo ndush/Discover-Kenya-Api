@@ -1,0 +1,8 @@
+services:
+  - name: touristattractionsapi
+    env: docker
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    ports:
+      - "3000"  
