@@ -1,9 +1,12 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.1"
+# gem "rails", "~> 8.0.1"
+gem "rails", "~> 7.2.2"
+
+
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1"
+#gem "sqlite3", ">= 2.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -21,6 +24,19 @@ gem "solid_queue"
 gem "solid_cable"
 gem "httparty"
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'devise'
+gem 'devise-jwt', '~> 0.12.1'
+gem "pg", "~> 1.4"
+gem 'rgeo'
+# gem 'rgeo-geos'
+gem 'activerecord-postgis-adapter', git: 'https://github.com/rgeo/activerecord-postgis-adapter.git', branch: 'master'
+
+
+
+
+
+
+
 
 
 # Reduces boot times through caching; required in config/boot.rb
