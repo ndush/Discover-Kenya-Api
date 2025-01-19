@@ -366,8 +366,8 @@ DEPENDENCIES
   bootsnap
   brakeman
   debug
-  devise
-  devise-jwt (~> 0.12.1)
+  devise (~> 4.9)
+  devise-jwt (~> 0.12)
   dotenv-rails
   httparty
   kamal
