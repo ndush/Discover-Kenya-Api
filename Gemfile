@@ -24,7 +24,7 @@ gem "solid_queue"
 gem "solid_cable"
 gem "httparty"
 gem 'dotenv-rails', groups: [:development, :test]
-gem 'devise', '~> 4.9'
+gem 'devise', '~> 4.9.4'
 gem 'devise-jwt', '~> 0.12'
 gem "pg", "~> 1.4"
 gem 'rgeo'
