@@ -9,10 +9,16 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.secret_key_base
-    jwt.expiration_time = 1.day.to_i
-  end
+ config.jwt do |jwt|
+  jwt.secret = Rails.application.credentials.secret_key_base
+  jwt.dispatch_requests = [
+    ['POST', %r{^/login$}]  # Add your authentication path(s) here
+  ]
+  jwt.revocation_requests = [
+    ['DELETE', %r{^/logout$}]  # Add your logout path(s) for revocation
+  ]
+  jwt.expiration_time = 1.day.to_i
+ end
    config.skip_session_storage = [:http_auth, :authenticatable]
 
 

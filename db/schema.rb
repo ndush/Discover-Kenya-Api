@@ -15,9 +15,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_100604) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-# Could not dump table "attractions" because of following StandardError
-#   Unknown type 'geography(Point,4326)' for column 'location'
-
+  create_table "attractions", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.string "category"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "country"
+    t.integer "status", default: 0
+    t.index ["location"], name: "index_attractions_on_location", using: :gist
+  end
 
   create_table "jwt_blacklists", force: :cascade do |t|
     t.string "jti"
@@ -42,14 +53,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_100604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
-  end
-
-  create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
-    t.string "auth_name", limit: 256
-    t.integer "auth_srid"
-    t.string "srtext", limit: 2048
-    t.string "proj4text", limit: 2048
-    t.check_constraint "srid > 0 AND srid <= 998999", name: "spatial_ref_sys_srid_check"
   end
 
   create_table "users", force: :cascade do |t|
