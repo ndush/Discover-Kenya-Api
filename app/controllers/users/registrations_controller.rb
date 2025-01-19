@@ -1,10 +1,11 @@
 # app/controllers/users/registrations_controller.rb
 class Users::RegistrationsController < Devise::RegistrationsController
-   skip_before_action :authenticate_user!, only: [:create]
-  # Disable the default session handling by overriding the create action
+  skip_before_action :authenticate_user!, only: [:create]
+
+  # Override the create action to handle JWT token generation
   def create
     super do |resource|
-      if resource.persisted?  # Check if user was successfully created
+      if resource.persisted?  # Check if the user was successfully created
         token = generate_jwt(resource)  # Generate JWT token
         render json: { user: resource, token: token }, status: :created and return
       end
