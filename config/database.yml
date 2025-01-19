@@ -7,15 +7,18 @@ default: &default
 
 development:
   <<: *default
+  adapter: postgis  # Change this from postgresql to postgis
   database: tourist_attractions_development
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
 
 test:
   <<: *default
+  adapter: postgis  # Change this from postgresql to postgis
   database: tourist_attractions_test
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
+
 
 production:
   primary:
