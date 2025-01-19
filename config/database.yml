@@ -1,15 +1,9 @@
-# SQLite. Versions 3.8.0 and up are supported.
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem "sqlite3"
-#
 default: &default
-  adapter: postgis
+  adapter: postgresql
   encoding: unicode
   pool: 5
-  host: localhost
   timeout: 5000
+  host: localhost  # This can be left as localhost or set via DATABASE_URL
 
 development:
   <<: *default
@@ -17,35 +11,31 @@ development:
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-
 test:
   <<: *default
   database: tourist_attractions_test
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
 
-# Store production database in the storage/ directory, which by default
-# is mounted as a persistent Docker volume in config/deploy.yml.
-
 production:
   primary:
     <<: *default
     database: tourist_attractions_production
-    username: <%= ENV['USERNAME'] %>
-    password: <%= ENV['PASSWORD'] %>
-    
+    username: <%= ENV['DATABASE_USERNAME'] %>
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: <%= ENV['DATABASE_HOST'] %>
+
+
+
   cache:
     <<: *default
-    database: storage/production_cache.sqlite3
+    database: storage/production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
-    database: storage/production_queue.sqlite3
+    database: storage/production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: storage/production_cable.sqlite3
+    database: storage/production_cable
     migrations_paths: db/cable_migrate
