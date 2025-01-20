@@ -13,7 +13,7 @@ Devise.setup do |config|
       ['POST', %r{^/users$}]
     ]
     jwt.revocation_requests = [['DELETE', %r{^/logout$}]]
-    jwt.revocation_strategy = JwtDenylist
+    # config.jwt.revocation_strategy = JwtDenylist
   end
 
   config.skip_session_storage = [:http_auth, :authenticatable]
@@ -23,7 +23,7 @@ Devise.setup do |config|
   require 'devise/orm/active_record'
 
   config.authentication_keys = [:email]
-  config.case_insegit nsitive_keys = [:email]
+  config.case_insensitive_keys = [:email]  # Fixed typo here
   config.strip_whitespace_keys = [:email]
 
   config.password_length = 6..128
