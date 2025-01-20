@@ -13,7 +13,7 @@ Devise.setup do |config|
       ['POST', %r{^/users$}]
     ]
     jwt.revocation_requests = [['DELETE', %r{^/logout$}]]
-  #  jwt.revocation_strategy = JwtDenylist
+   jwt.revocation_strategy = JwtDenylist
   end
 
   config.skip_session_storage = [:http_auth, :authenticatable]
