@@ -20,4 +20,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       Rails.application.secret_key_base  # Secret key to sign JWT
     )
   end
+
+
+  # def destroy
+  #   current_user.jwt_denylist.create!(jti: request.headers['Authorization'].split(' ').last)
+  #   head :no_content
+  # end
+
 end

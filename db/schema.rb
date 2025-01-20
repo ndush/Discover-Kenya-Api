@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_19_224842) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_20_082214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_19_224842) do
   create_table "attractions", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geometry "location", limit: {:srid=>4326, :type=>"st_point"}
     t.string "category"
     t.float "latitude"
     t.float "longitude"
@@ -27,27 +27,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_19_224842) do
     t.integer "user_id"
     t.string "country"
     t.integer "status", default: 0
-    t.index ["location"], name: "index_attractions_on_location", using: :gist
-  end
-
-  create_table "jwt_blacklists", force: :cascade do |t|
-    t.string "jti"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["jti"], name: "index_jwt_blacklists_on_jti"
-  end
-
-  create_table "jwt_denylists", force: :cascade do |t|
-    t.string "jti"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["jti"], name: "index_jwt_denylists_on_jti"
   end
 
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "message"
-    t.integer "status"
+    t.string "message", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
