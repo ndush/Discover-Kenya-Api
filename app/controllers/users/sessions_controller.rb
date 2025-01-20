@@ -2,12 +2,14 @@
 class Users::RegistrationsController < Devise::RegistrationsController
    skip_before_action :authenticate_user!, only: [:create]
   # Disable the default session handling by overriding the create action
-  def create
-    super do |resource|
-      if resource.persisted?  # Check if user was successfully created
-        token = generate_jwt(resource)  # Generate JWT token
-        render json: { user: resource, token: token }, status: :created and return
-      end
+ def create
+    user = User.find_for_database_authentication(email: params[:email])
+
+    if user && user.valid_password?(params[:password])
+      token = generate_jwt(user)
+      render json: { user: user, token: token }, status: :ok
+    else
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
   end
 
@@ -16,15 +18,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # Method to generate JWT token
   def generate_jwt(user)
     JWT.encode(
-      { user_id: user.id, exp: 24.hours.from_now.to_i },  # JWT payload
-      Rails.application.secret_key_base  # Secret key to sign JWT
+      { user_id: user.id, exp: 24.hours.from_now.to_i },
+      Rails.application.secret_key_base
     )
   end
 
 
-  # def destroy
-  #   current_user.jwt_denylist.create!(jti: request.headers['Authorization'].split(' ').last)
-  #   head :no_content
-  # end
+  def destroy
+    # Here, store the JWT ID in a denylist for revocation
+    current_user.jwt_denylist.create!(jti: request.headers['Authorization'].split(' ').last)
+    head :no_content
+  end
 
 end
