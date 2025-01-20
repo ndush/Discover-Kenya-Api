@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # Devise routes for users, including session management for JWT
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
 
