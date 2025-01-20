@@ -1,8 +1,6 @@
+# app/models/user.rb
 class User < ApplicationRecord
-  # Include JTIMatcher for revocation strategy
-  include Devise::JWT::RevocationStrategies::JTIMatcher
-
-  # Devise modules for authentication
+  # Devise modules and JWT setup
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
@@ -10,15 +8,20 @@ class User < ApplicationRecord
   # Enum for role management
   enum role: { user: 0, moderator: 1, admin: 2 }
 
-  # Set default role for new users if no role is assigned
+  # Set default role for new users
   after_initialize :set_default_role, if: :new_record?
 
-  # Associations (assuming a User has many posts)
+  # Associations
   has_many :posts
 
   # Returns posts created today
   def posts_today
     posts.where(created_at: Time.zone.today.all_day)
+  end
+
+  # Generate JWT token
+  def generate_jwt_token
+    JWT.encode({ user_id: self.id, exp: 24.hours.from_now.to_i }, Rails.application.secret_key_base)
   end
 
   private

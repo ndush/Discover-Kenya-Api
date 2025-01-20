@@ -7,13 +7,15 @@ Devise.setup do |config|
 
   # Use JWT authentication
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.secret_key_base
+    jwt.secret = Rails.application.credentials.secret_key_base # Secret for JWT encoding
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}],
-      ['POST', %r{^/users$}]
+      ['POST', %r{^/login$}],  # Route for user login
+      ['POST', %r{^/users$}]   # Route for user registration
     ]
-    jwt.revocation_requests = [['DELETE', %r{^/logout$}]]
-    # jwt.revocation_strategy = JwtDenylist # Ensure this is set correctly
+    jwt.revocation_requests = [['DELETE', %r{^/logout$}]]  # Route for logout (revocation)
+
+    # Uncomment and define a revocation strategy if necessary
+    jwt.revocation_strategy = JwtDenylist
   end
 
   config.skip_session_storage = [:http_auth, :authenticatable]
