@@ -1,4 +1,5 @@
 class JwtDenylist < ApplicationRecord
+    include Devise::JWT::RevocationStrategies::Denylist
   # Validations
   validates :jti, presence: true, uniqueness: true
   validates :exp, presence: true

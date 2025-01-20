@@ -23,7 +23,7 @@ Devise.setup do |config|
   require 'devise/orm/active_record'
 
   config.authentication_keys = [:email]
-  config.case_insensitive_keys = [:email]
+  config.case_insegit nsitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
 
   config.password_length = 6..128
