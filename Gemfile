@@ -25,15 +25,15 @@ gem "solid_cable"
 gem "httparty"
 
 gem 'dotenv-rails', groups: [:development, :test]
-gem 'devise', '~> 4.9.4'
-gem 'devise-jwt', '~> 0.12'
-# gem 'jwt_denylist'
+
+
 gem "pg", "~> 1.4"
-gem 'rgeo'
-# gem 'rgeo-geos'
+gem 'rgeo', '~> 3.0'
+gem 'rgeo-activerecord'
+
 gem 'activerecord-postgis-adapter', git: 'https://github.com/rgeo/activerecord-postgis-adapter.git', branch: 'master'
 
-
+gem 'redis'
 
 
 
@@ -57,6 +57,8 @@ gem "thruster", require: false
 # gem "rack-cors"
 
 group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 

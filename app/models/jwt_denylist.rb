@@ -1,6 +1,7 @@
-# app/models/jwt_denylist.rb
 class JwtDenylist < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Denylist
+
+  self.table_name = 'jwt_denylists'
 
   # Validations
   validates :jti, presence: true, uniqueness: true
@@ -16,15 +17,15 @@ class JwtDenylist < ApplicationRecord
 
   # Periodically cleanup expired tokens from the denylist
   def self.cleanup_expired
-    expired.destroy_all
+    expired.delete_all  # Using delete_all for performance
   end
 
-  # Additional method to revoke token on logout or other events
-  def self.revoke_jwt_token!(jti)
-    create!(jti: jti, exp: Time.current)  # Add current time as exp or use the actual token expiration time
+  # Revoke token with the actual expiration time
+  def self.revoke_jwt_token!(jti, exp)
+    create!(jti: jti, exp: exp)
   end
 
-  # Callback to clean up expired tokens regularly
+  # Callback to clean up expired tokens regularly (can be triggered by a background job)
   def self.cleanup_expired_tokens!
     cleanup_expired
   end

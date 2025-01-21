@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   # Enum for role management
-  enum role: { user: 0, moderator: 1, admin: 2 }
+ enum role: [:user, :moderator, :admin]
 
   # Set default role for new users
   after_initialize :set_default_role, if: :new_record?
