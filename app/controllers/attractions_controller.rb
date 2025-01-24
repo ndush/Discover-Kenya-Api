@@ -1,29 +1,30 @@
 class AttractionsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :approve, :reject]
   before_action :set_attraction, only: [:approve, :reject]
+  def search
+  latitude = params[:latitude]
+  longitude = params[:longitude]
+  radius = params[:radius] || 5000
+  category = params[:category]
 
-  # GET /attractions?latitude=1.4033&longitude=35.0873
-  def index
-    latitude = params[:latitude]
-    longitude = params[:longitude]
-    radius = params[:radius] || 5000
+  if latitude.present? && longitude.present?
+    service = HereService.new(ENV['HERE_API_KEY'])
+    attractions = service.get_attractions_by_location(latitude, longitude, radius, category)
 
-    if latitude.present? && longitude.present?
-      service = HereService.new(ENV['HERE_API_KEY'])
-      attractions = service.get_attractions_by_location(latitude, longitude, radius)
+    logger.debug("API Response: #{attractions.inspect}")
 
-      if attractions['error']
-        render json: { error: attractions['error'], message: attractions['message'] }, status: :bad_request
-      else
-        render json: attractions
-      end
+    if attractions['error']
+      render json: { error: attractions['error'], message: attractions['message'] }, status: :bad_request
     else
-      attractions = Attraction.all
-      render json: attractions
-    end
-  end
+      items = attractions['items'] 
+      formatted_attractions = format_attractions(items) if items.present? 
 
-  # POST /attractions
+      render json: formatted_attractions || { message: 'No attractions found' }, status: :ok
+    end
+  else
+    render json: { error: 'Latitude and Longitude are required' }, status: :unprocessable_entity
+  end
+end
   def create
     if current_user.posts_today.count >= ENV.fetch("POST_LIMIT", 5).to_i
       return render json: { error: 'Post limit exceeded for today.' }, status: :too_many_requests
@@ -41,7 +42,6 @@ class AttractionsController < ApplicationController
     end
   end
 
-  # PATCH /attractions/:id/approve
   def approve
     if current_user.moderator?
       @attraction.update!(status: :approved)
@@ -52,7 +52,6 @@ class AttractionsController < ApplicationController
     end
   end
 
-  # PATCH /attractions/:id/reject
   def reject
     if current_user.moderator?
       Rails.logger.debug("Rejecting attraction with ID: #{@attraction.id}")
@@ -75,6 +74,16 @@ class AttractionsController < ApplicationController
   def attraction_params
     params.require(:attraction).permit(:name, :description, :location, :category, :latitude, :longitude, :country)
   end
+
+ def format_attractions(attractions)
+  attractions.map do |attraction|
+    {
+      name: attraction["title"], 
+      address: attraction["address"] ? attraction["address"]["label"] : 'No Address', 
+      id: attraction["id"] 
+    }
+  end
+end
 
   def notify_user(user, message)
     Notification.create(user: user, message: message)

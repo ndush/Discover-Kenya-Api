@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     user = User.new(
       name: 'Test User',
       email: 'test@example.com',
-      password: 'password123' # Add a password here
+      password: 'password123' 
     )
     expect(user).to be_valid
   end

@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::API
   before_action :authenticate_user!
 
@@ -8,7 +9,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_user!
-    token = request.headers['Authorization']&.split(' ')&.last  # Extract token from the Authorization header
+    token = request.headers['Authorization']&.split(' ')&.last 
     
     Rails.logger.debug("Authorization Header: #{request.headers['Authorization']}")
 
@@ -27,7 +28,7 @@ class ApplicationController < ActionController::API
   end
 
   def find_user_by_session_token(token)
-    user_id, stored_token = token.split(':')  # Assuming token is user_id:session_token format
+    user_id, stored_token = token.split(':')  
     user = User.find_by(id: user_id)
     if user && redis.get("user:#{user.id}:session_token") == stored_token
       user

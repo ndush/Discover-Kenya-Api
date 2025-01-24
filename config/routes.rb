@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   post 'users/login', to: 'users#login'
   post 'users/register', to: 'users#register'
-  delete 'logout', to: 'users#logout'
+  delete 'users/logout', to: 'users#logout'
+
+  get 'attractions/search', to: 'attractions#search'
 
   resources :attractions, only: [:index, :create] do
     member do

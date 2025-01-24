@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_21_101014) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_21_121949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -27,16 +27,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_21_101014) do
     t.integer "user_id"
     t.string "country"
     t.integer "status", default: 0
-  end
-
-  create_table "jwt_denylists", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "jti", null: false
-    t.datetime "revoked_at"
-    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
-    t.index ["jti"], name: "index_jwt_denylists_on_jti", unique: true
-    t.index ["location"], name: "index_jwt_denylists_on_location", using: :gist
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -68,6 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_21_101014) do
     t.string "jti"
     t.integer "role", default: 0
     t.string "name"
+    t.string "password_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

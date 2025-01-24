@@ -3,18 +3,18 @@ default: &default
   encoding: unicode
   pool: 5
   timeout: 5000
-  host: localhost  # This can be left as localhost or set via DATABASE_URL
+  host: localhost  
 
 development:
   <<: *default
-  adapter: postgis  # Change this from postgresql to postgis
+  adapter: postgis 
   database: tourist_attractions_development
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
 
 test:
   <<: *default
-  adapter: postgis  # Change this from postgresql to postgis
+  adapter: postgis  
   database: tourist_attractions_test
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
