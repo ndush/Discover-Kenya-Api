@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   # User routes
-  post 'users/login', to: 'users#login'
-  post 'users/register', to: 'users#register'
+ post 'users/login', to: 'users#login'
+  post 'users/register', to: 'registrations#create'
   delete 'users/logout', to: 'users#logout'
+
 
   # Attraction routes
   get 'attractions/search', to: 'attractions#search'

@@ -1,5 +1,5 @@
-# app/controllers/users/registrations_controller.rb
-class Users::RegistrationsController < ApplicationController
+# app/controllers/registrations_controller.rb
+class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
 
   def create
