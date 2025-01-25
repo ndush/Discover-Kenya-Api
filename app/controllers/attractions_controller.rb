@@ -1,30 +1,35 @@
 class AttractionsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :approve, :reject]
   before_action :set_attraction, only: [:approve, :reject]
-  def search
-  latitude = params[:latitude]
-  longitude = params[:longitude]
-  radius = params[:radius] || 5000
-  category = params[:category]
 
-  if latitude.present? && longitude.present?
-    service = HereService.new(ENV['HERE_API_KEY'])
-    attractions = service.get_attractions_by_location(latitude, longitude, radius, category)
+  # GET /attractions?latitude=1.4033&longitude=35.0873&category=1&radius=5000
+  # GET /attractions/search?name=diani beaches&latitude=1.4033&longitude=35.0873&radius=5000&category=1
+def search
+    name = params[:name]
+    latitude = params[:latitude]
+    longitude = params[:longitude]
+    radius = params[:radius] || 5000
+    category = params[:category]
 
-    logger.debug("API Response: #{attractions.inspect}")
+    if name.present? && latitude.present? && longitude.present?
+      service = HereService.new(ENV['HERE_API_KEY'])
+      attractions = service.get_attractions_by_name(name, latitude, longitude, radius, category)  # Call the public method
+    else
+      render json: { error: 'Name, Latitude, and Longitude are required' }, status: :unprocessable_entity
+      return
+    end
 
     if attractions['error']
       render json: { error: attractions['error'], message: attractions['message'] }, status: :bad_request
     else
-      items = attractions['items'] 
-      formatted_attractions = format_attractions(items) if items.present? 
+      items = attractions['items']
+      formatted_attractions = format_attractions(items) if items.present?
 
       render json: formatted_attractions || { message: 'No attractions found' }, status: :ok
     end
-  else
-    render json: { error: 'Latitude and Longitude are required' }, status: :unprocessable_entity
   end
-end
+
+  # POST /attractions
   def create
     if current_user.posts_today.count >= ENV.fetch("POST_LIMIT", 5).to_i
       return render json: { error: 'Post limit exceeded for today.' }, status: :too_many_requests
@@ -42,6 +47,7 @@ end
     end
   end
 
+  # PATCH /attractions/:id/approve
   def approve
     if current_user.moderator?
       @attraction.update!(status: :approved)
@@ -52,6 +58,7 @@ end
     end
   end
 
+  # PATCH /attractions/:id/reject
   def reject
     if current_user.moderator?
       Rails.logger.debug("Rejecting attraction with ID: #{@attraction.id}")
@@ -77,13 +84,17 @@ end
 
  def format_attractions(attractions)
   attractions.map do |attraction|
-    {
-      name: attraction["title"], 
-      address: attraction["address"] ? attraction["address"]["label"] : 'No Address', 
-      id: attraction["id"] 
-    }
-  end
+    # Assuming the address or other property contains 'Kenya' or its variant
+    if attraction["address"] && attraction["address"]["label"].include?("Kenya")
+      {
+        name: attraction["title"],          # Use "title" from the API response
+        address: attraction["address"] ? attraction["address"]["label"] : 'No Address',  # Use label for address
+        id: attraction["id"]                # Include id or any other necessary fields
+      }
+    end
+  end.compact  # This removes any nil entries from the array
 end
+
 
   def notify_user(user, message)
     Notification.create(user: user, message: message)

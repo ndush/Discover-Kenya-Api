@@ -35,6 +35,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'activerecord-postgis-adapter', git: 'https://github.com/rgeo/activerecord-postgis-adapter.git', branch: 'master'
 
 gem 'redis'
+gem 'geocoder'
 
 
 
