@@ -31,5 +31,4 @@ class Users::RegistrationsController < ApplicationController
    def redis
      @redis ||= Redis.new
    end
- end
 end
