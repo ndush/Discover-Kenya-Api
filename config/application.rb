@@ -17,6 +17,8 @@ module TouristAttractionsApi
 
    
     config.api_only = true
+    config.autoloader = :zeitwerk
+
    
 
     config.rgeo_factory = RGeo::Geos.factory(srid: 4326)
