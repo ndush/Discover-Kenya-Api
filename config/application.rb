@@ -17,6 +17,8 @@ module TouristAttractionsApi
 
    
     config.api_only = true
+    config.assets.initialize_on_precompile = false
+
 
     config.rgeo_factory = RGeo::Geos.factory(srid: 4326)
 
