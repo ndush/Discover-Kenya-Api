@@ -24,13 +24,17 @@ gem "solid_queue"
 gem "solid_cable"
 gem "httparty"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails', '~> 2.8', groups: [:development, :test]
+
+
 
 
 gem "pg", "~> 1.4"
 gem 'rgeo', '~> 3.0'
 gem 'rgeo-activerecord'
 gem 'bcrypt', '~> 3.1.7'
+
+
 
 gem 'activerecord-postgis-adapter', git: 'https://github.com/rgeo/activerecord-postgis-adapter.git', branch: 'master'
 
@@ -62,7 +66,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+gem 'debug', require: false, platforms: %i[ mri windows ]
+
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false

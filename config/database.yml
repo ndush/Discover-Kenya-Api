@@ -1,45 +1,69 @@
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: 5
+#   timeout: 5000
+#   host: localhost  
+
+# development:
+#   <<: *default
+#   adapter: postgis 
+#   database: tourist_attractions_development
+#   username: <%= ENV['USERNAME'] %>
+#   password: <%= ENV['PASSWORD'] %>
+
+# test:
+#   <<: *default
+#   adapter: postgis  
+#   database: tourist_attractions_test
+#   username: <%= ENV['USERNAME'] %>
+#   password: <%= ENV['PASSWORD'] %>
+
+
+# production:
+#   primary:
+#     <<: *default
+#     url: <%= "postgres://#{ENV['USERNAME']}:#{ENV['PASSWORD']}@#{ENV['DATABASE_HOST']}:5432/tourist_attractions_production" %>
+#     database: tourist_attractions_production
+#     username: <%= ENV['DATABASE_USERNAME'] %>
+#     password: <%= ENV['DATABASE_PASSWORD'] %>
+#     host: <%= ENV['DATABASE_HOST'] %>
+
+
+
+#   cache:
+#     <<: *default
+#     database: storage/production_cache
+#     migrations_paths: db/cache_migrate
+#   queue:
+#     <<: *default
+#     database: storage/production_queue
+#     migrations_paths: db/queue_migrate
+#   cable:
+#     <<: *default
+#     database: storage/production_cable
+#     migrations_paths: db/cable_migrate
 default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
   timeout: 5000
-  host: localhost  
 
 development:
   <<: *default
-  adapter: postgis 
+  adapter: postgis
   database: tourist_attractions_development
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
 
 test:
   <<: *default
-  adapter: postgis  
+  adapter: postgis
   database: tourist_attractions_test
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
 
-
 production:
-  primary:
-    <<: *default
-    url: <%= "postgres://#{ENV['USERNAME']}:#{ENV['PASSWORD']}@#{ENV['DATABASE_HOST']}:5432/tourist_attractions_production" %>
-    database: tourist_attractions_production
-    username: <%= ENV['DATABASE_USERNAME'] %>
-    password: <%= ENV['DATABASE_PASSWORD'] %>
-    host: <%= ENV['DATABASE_HOST'] %>
-
-
-
-  cache:
-    <<: *default
-    database: storage/production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *default
-    database: storage/production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *default
-    database: storage/production_cable
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: 10
