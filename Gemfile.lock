@@ -103,6 +103,8 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    dockerfile-rails (1.7.3)
+      rails (>= 3.0.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -369,6 +371,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   debug
+  dockerfile-rails (>= 1.7)
   dotenv-rails (~> 2.8)
   factory_bot_rails
   geocoder
@@ -389,4 +392,4 @@ DEPENDENCIES
   tzinfo-data
 
 BUNDLED WITH
-   2.6.3
+   2.4.10

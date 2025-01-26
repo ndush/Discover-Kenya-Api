@@ -77,3 +77,5 @@ gem 'debug', require: false, platforms: %i[ mri windows ]
 end
 
 
+
+gem "dockerfile-rails", ">= 1.7", :group => :development
