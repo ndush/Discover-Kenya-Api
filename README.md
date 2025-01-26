@@ -1,7 +1,7 @@
 # Discover Kenya API
- . This is the Discover Kenya API, a service designed to manage and interact with tourist attractions, users, and authentication for the platform. The API allows users to register, log in, search, create, approve, reject, and log out from the system.
+This is the Discover Kenya API, a service designed to manage and interact with tourist attractions, users, and authentication for the platform. The API allows users to register, log in, search, create, approve, reject, and log out from the system.
 
-Table of Contents
+# Table of Contents
 Installation
 Authentication
 Endpoints
@@ -15,12 +15,12 @@ Logout
 Error Handling
 Installation
 
-Any REST client (e.g., Postman or Insomnia)
+ # Any REST client (e.g., Postman or Insomnia)
 Setup
 Clone the repository:
 
 
-git clone https://github.com/ndush/Discover-Kenya-Api.git
+# git clone https://github.com/ndush/Discover-Kenya-Api.git
 cd Discover-Kenya-Api
 Install dependencies:
 
@@ -33,10 +33,10 @@ Start the server:
 
 Your server will now be running at http://localhost:3000.
 
-Authentication
+# Authentication
 To interact with most endpoints, users need to be authenticated.
 
-User Registration
+# User Registration
 To create a new user, make a POST request to /users/register.
 
 Request Body:
@@ -62,7 +62,7 @@ json
 }
 The response includes a JWT token used for authentication.
 
-User Login
+# User Login
 To log in, make a POST request to /users/login.
 
 Request Body:
@@ -81,7 +81,7 @@ json
 }
 The session token is used for further authentication on other routes.
 
-User Logout
+# User Logout
 To log out, make a POST request to /users/logout.
 
 Response:
@@ -92,7 +92,7 @@ Response:
 }
 The session token is invalidated upon logging out.
 
-Endpoints
+# Endpoints
 1. User Registration
 URL: POST /users/register
 
