@@ -1,5 +1,5 @@
 # Discover Kenya API
- # This is the Discover Kenya API, a service designed to manage and interact with tourist attractions, users, and authentication for the platform. The API allows users to register, log in, search, create, approve, reject, and log out from the system.
+ . This is the Discover Kenya API, a service designed to manage and interact with tourist attractions, users, and authentication for the platform. The API allows users to register, log in, search, create, approve, reject, and log out from the system.
 
 Table of Contents
 Installation
