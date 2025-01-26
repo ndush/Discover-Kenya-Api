@@ -10,7 +10,8 @@ module TouristAttractionsApi
 
    
     config.autoload_lib(ignore: %w[assets tasks])
-    config.autoload_paths += %W(#{config.root}/app/controllers)
+    # config.autoload_paths += %W(#{config.root}/app/controllers)
+    config.autoload_paths += %W(#{config.root}/app/controllers/users)
    
    
     config.eager_load_paths += %W(#{config.root}/app/controllers/users)

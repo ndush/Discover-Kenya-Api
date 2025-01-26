@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # User routes
  post 'users/login', to: 'users#login'
+ 
   post 'users/register', to: 'registrations#create'
   delete 'users/logout', to: 'users#logout'
 
