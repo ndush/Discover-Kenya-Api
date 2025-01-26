@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_25_173016) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_26_180413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -27,6 +27,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_25_173016) do
     t.integer "user_id"
     t.string "country"
     t.integer "status", default: 0
+    t.string "price"
+    t.string "address"
   end
 
   create_table "notifications", force: :cascade do |t|

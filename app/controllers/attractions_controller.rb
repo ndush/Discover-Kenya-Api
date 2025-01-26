@@ -30,22 +30,30 @@ def search
   end
 
   # POST /attractions
-  def create
-    if current_user.posts_today.count >= ENV.fetch("POST_LIMIT", 5).to_i
-      return render json: { error: 'Post limit exceeded for today.' }, status: :too_many_requests
-    end
-
-    location = "POINT(#{attraction_params[:longitude]} #{attraction_params[:latitude]})"
-    @attraction = Attraction.new(attraction_params.merge(location: location))
-    @attraction.user_id = current_user.id
-    @attraction.status = :pending
-
-    if @attraction.save
-      render json: @attraction, status: :created
-    else
-      render json: @attraction.errors, status: :unprocessable_entity
-    end
+# POST /attractions
+def create
+  if current_user.posts_today.count >= ENV.fetch("POST_LIMIT", 5).to_i
+    return render json: { error: 'Post limit exceeded for today.' }, status: :too_many_requests
   end
+
+  # Geocode or set address if needed
+  @attraction = Attraction.new(attraction_params)
+  @attraction.user_id = current_user.id
+  @attraction.status = :pending
+
+  # Save the attraction and handle geocoding if applicable
+  if @attraction.save
+    # Filter out any nil attributes from the response
+    attraction_response = @attraction.attributes.compact
+
+    render json: attraction_response, status: :created
+  else
+    render json: @attraction.errors, status: :unprocessable_entity
+  end
+end
+
+
+
 
   # PATCH /attractions/:id/approve
   def approve
@@ -79,8 +87,9 @@ def search
   end
 
   def attraction_params
-    params.require(:attraction).permit(:name, :description, :location, :category, :latitude, :longitude, :country)
+  params.require(:attraction).permit(:name, :description, :location, :category, :latitude, :longitude, :country, :price)
   end
+
 
  def format_attractions(attractions)
   attractions.map do |attraction|
