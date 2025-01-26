@@ -93,7 +93,7 @@ Response:
 The session token is invalidated upon logging out.
 
 # Endpoints
-1. User Registration
+# User Registration
 URL: POST /users/register
 
 Description: Creates a new user.
@@ -105,9 +105,10 @@ json
 
 {
   "user": { ... },
-  "token": "jwt-token"
+  "token": "token"
 }
-2. User Login
+
+# User Login
 URL: POST /users/login
 
 Description: Logs the user in and returns a session token.
@@ -121,7 +122,9 @@ json
   "message": "Logged in successfully",
   "session_token": "jwt-token"
 }
-3. Search Attractions
+
+
+# Search Attractions
 URL: GET /attractions/search
 
 Description: Searches for attractions by name, category, and location.
@@ -146,7 +149,7 @@ json
   },
   ...
 ]
-4. Post Attraction
+# Post Attraction
 URL: POST /attractions
 
 Description: Creates a new attraction.
@@ -172,7 +175,7 @@ json
   "country": "Kenya",
   "price": "2009"
 }
-5. Approve Attraction
+# Approve Attraction
 URL: POST /attractions/:id/approve
 
 Description: Approves a pending attraction.
@@ -188,7 +191,7 @@ json
   "description": "A beautiful place to visit in Limurun.",
   "price": "2009"
 }
-6. Reject Attraction
+# Reject Attraction
 URL: POST /attractions/:id/reject
 
 Description: Rejects a pending attraction.
@@ -204,7 +207,7 @@ json
   "description": "A beautiful place to visit in Limurun.",
   "price": "2009"
 }
-7. Logout
+# Logout
 URL: POST /users/logout
 
 Description: Logs the user out of the system.
