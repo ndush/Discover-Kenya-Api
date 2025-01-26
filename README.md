@@ -15,7 +15,7 @@ Logout
 Error Handling
 Installation
 
- # Any REST client (e.g., Postman or Insomnia)
+ # Any REST client (e.g., thunderclient)
 Setup
 Clone the repository:
 
