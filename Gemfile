@@ -24,7 +24,7 @@ gem "solid_queue"
 gem "solid_cable"
 gem "httparty"
 
-gem 'dotenv-rails', '~> 2.8', groups: [:development, :test]
+gem 'dotenv-rails', '~> 3.1', groups: [:development, :test]
 
 
 
